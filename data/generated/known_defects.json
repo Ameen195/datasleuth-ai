@@ -1,0 +1,22 @@
+{
+  "duplicate_transaction_id": {
+    "rows": [
+      0,
+      1
+    ],
+    "column": "transaction_id"
+  },
+  "missing_date": {
+    "row": 2,
+    "column": "transaction_date"
+  },
+  "invalid_amount": {
+    "row": 3,
+    "column": "amount",
+    "value": -50.0
+  },
+  "renamed_column": {
+    "original": "payment_method",
+    "replacement": "payment_type"
+  }
+}
