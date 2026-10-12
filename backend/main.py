@@ -1,4 +1,4 @@
-
+from fastapi.middleware.cors import CORSMiddleware
 import os
 import tempfile
 from pathlib import Path
@@ -12,6 +12,16 @@ app = FastAPI(
     title="DataSleuth AI API",
     description="API for automated data quality investigation.",
     version="1.0.0",
+)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["*"],
 )
 
 MAX_FILE_SIZE = 20 * 1024 * 1024  # 20 MB per CSV
