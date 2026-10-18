@@ -2,7 +2,11 @@
 from __future__ import annotations
 
 import json
+import os
 from typing import Annotated, TypedDict
+
+from langchain_ollama import ChatOllama
+from langchain_groq import ChatGroq
 
 import pandas as pd
 from langchain_core.messages import (
@@ -219,14 +223,20 @@ def _fallback_diagnosis(report: dict) -> str:
 def build_investigation_graph():
     """Create a graph that investigates incidents with a hard tool-call limit."""
 
-    model = ChatOllama(
-        model="qwen3.5:4b",
-        temperature=0,
-        num_ctx=2048,
-        num_predict=512,
-        reasoning=False,
-    )
-
+    if os.getenv("GROQ_API_KEY"):
+        model = ChatGroq(
+            model=os.getenv("GROQ_MODEL", "openai/gpt-oss-20b"),
+            temperature=0,
+            max_tokens=512,
+        )
+    else:
+        model = ChatOllama(
+            model="qwen3.5:4b",
+            temperature=0,
+            num_ctx=2048,
+            num_predict=512,
+            reasoning=False,
+        )
     model_with_tools = model.bind_tools(TOOLS)
     tool_node = ToolNode(TOOLS)
 
