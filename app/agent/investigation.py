@@ -227,7 +227,7 @@ def build_investigation_graph():
         model = ChatGroq(
             model=os.getenv("GROQ_MODEL", "openai/gpt-oss-20b"),
             temperature=0,
-            max_tokens=512,
+            max_tokens=1200,
         )
     else:
         model = ChatOllama(
